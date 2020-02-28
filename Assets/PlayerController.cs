@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
     private Rigidbody rb;
 
+    private float jumpSpeed = 0.05f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,19 +20,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.cameraTransform.position.y - transform.position.y > 3)
-        {
-            transform.position = new Vector3(transform.position.x, this.cameraTransform.position.y - 3, transform.position.z);
-        }
         if (Input.GetKey(KeyCode.Space))
         {
-            this.rb.AddForce(Vector3.up * 0.2f, ForceMode.Impulse);
+            this.rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         }
-
-            transform.position = new Vector3(
+        transform.position = new Vector3(
           transform.position.x,
           transform.position.y,
-          cameraTransform.position.z
+          cameraTransform.position.z - 3f
         );
 
 
@@ -38,4 +35,3 @@ public class PlayerController : MonoBehaviour
 
 
 }
-
