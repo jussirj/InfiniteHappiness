@@ -131,7 +131,7 @@ PrefabInstance:
     - target: {fileID: 8898491625806356962, guid: ca0cc14b44f2643daa9e90d75463bece,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.52
+      value: 28.4
       objectReference: {fileID: 0}
     - target: {fileID: 8898491625806356962, guid: ca0cc14b44f2643daa9e90d75463bece,
         type: 3}
@@ -197,6 +197,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 139104919240569673, guid: 228c92739cd874befbfa484d04e32359,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 139104919240569674, guid: 228c92739cd874befbfa484d04e32359,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -252,6 +257,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 139104919240569676, guid: 228c92739cd874befbfa484d04e32359,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 139104919240569677, guid: 228c92739cd874befbfa484d04e32359,
         type: 3}
       propertyPath: m_Enabled
@@ -264,6 +274,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 228c92739cd874befbfa484d04e32359, type: 3}
+--- !u!4 &299316154 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 139104919240569674, guid: 228c92739cd874befbfa484d04e32359,
+    type: 3}
+  m_PrefabInstance: {fileID: 265804663}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &488250183
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +293,7 @@ GameObject:
   - component: {fileID: 488250185}
   - component: {fileID: 488250184}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: PlayerStopper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -351,12 +367,55 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488250183}
   m_LocalRotation: {x: -0.092618, y: 0.70101494, z: -0.092618, w: 0.70101494}
-  m_LocalPosition: {x: 0, y: 1.21, z: 14.035952}
+  m_LocalPosition: {x: 0, y: -1.5, z: 24.47}
   m_LocalScale: {x: 27.472496, y: 0.541125, z: 40.9354}
   m_Children: []
   m_Father: {fileID: 1135531067}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &855209141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855209143}
+  - component: {fileID: 855209142}
+  m_Layer: 0
+  m_Name: Cub
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &855209142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855209141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f0d8ac8490e4d2381f3fd59811177b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &855209143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855209141}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_Children: []
+  m_Father: {fileID: 299316154}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!1 &1135531064
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +468,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 25
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -435,7 +494,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135531064}
   m_LocalRotation: {x: 0.092618, y: -0.70101494, z: 0.092618, w: 0.70101494}
-  m_LocalPosition: {x: 13.19, y: 5, z: 0}
+  m_LocalPosition: {x: 30, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 488250187}
