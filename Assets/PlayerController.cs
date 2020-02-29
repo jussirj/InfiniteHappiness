@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private float playerPositionY = -100f;
     private GameObject winScreen;
     private GameObject loseScreen;
+    private Cub cub;
+    private bool stopped;
 
     private float zDistanceToCamera = 3f;
     private float zSpeed = 0.05f;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
         this.loseScreen = GameObject.Find("LoseScreen");
         this.winScreen.SetActive(false);
         this.loseScreen.SetActive(false);
+        this.cub = GameObject.Find("Cub").GetComponent<Cub>();
     }
 
     // Update is called once per frame
@@ -46,34 +49,40 @@ public class PlayerController : MonoBehaviour
 
         if(transform.position.y < startLevel - loseLimit) {
           this.loseScreen.SetActive(true);
+          this.stopped = true;
+          this.cub.Stop();
         }
 
-        if(transform.position.y > startLevel + winLimit) {
+        if (transform.position.y > startLevel + winLimit) {
           this.winScreen.SetActive(true);
+          this.stopped = true;
+          this.cub.Stop();
         }
 
-        if (jumping)
-        {
-          if(transform.position.y < playerPositionY + jumpHeight) {
-            transform.position = new Vector3(
-              transform.position.x,
-              transform.position.y + 0.1f,
-              transform.position.z + this.zSpeed
-            );
-          }
-        } else {
-          if (transform.position.y < playerPositionY){
-            transform.position = new Vector3(
-              transform.position.x,
-              transform.position.y + 0.05f,
-              transform.position.z + this.zSpeed
-            );
-          } else {
-            transform.position = new Vector3(
+        if(!stopped){
+          if (jumping)
+          {
+            if(transform.position.y < playerPositionY + jumpHeight) {
+              transform.position = new Vector3(
                 transform.position.x,
-                transform.position.y - 0.05f,
+                transform.position.y + 0.1f,
                 transform.position.z + this.zSpeed
               );
+            }
+          } else {
+            if (transform.position.y < playerPositionY){
+              transform.position = new Vector3(
+                transform.position.x,
+                transform.position.y + 0.05f,
+                transform.position.z + this.zSpeed
+              );
+            } else {
+              transform.position = new Vector3(
+                  transform.position.x,
+                  transform.position.y - 0.05f,
+                  transform.position.z + this.zSpeed
+                );
+            }
           }
         }
     }

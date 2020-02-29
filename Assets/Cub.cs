@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cub : MonoBehaviour
 {
-    Movin cub;
+    public Movin cub;
 
     void Start()
     {
@@ -17,6 +17,11 @@ public class Cub : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void Stop()
+    {
+        cub.Stop();
     }
 
 }
