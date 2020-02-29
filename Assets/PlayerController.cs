@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private float targetY = -100f;
 
-    private float jumpSpeed = 0.05f;
+    private float zDistanceToCamera = 3f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,20 +32,16 @@ public class PlayerController : MonoBehaviour
            transform.position = new Vector3(
               transform.position.x,
               transform.position.y + 0.05f,
-              cameraTransform.position.z - 0f
+              cameraTransform.position.z - zDistanceToCamera
             );
         } else
         {
             transform.position = new Vector3(
                transform.position.x,
                transform.position.y - 0.05f,
-               cameraTransform.position.z - 0f
+               cameraTransform.position.z - zDistanceToCamera
              );
         }
-
-
-
-
     }
 
     private void OnTriggerEnter(Collider other)
