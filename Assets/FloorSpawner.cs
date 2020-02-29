@@ -87,7 +87,13 @@ public class FloorSpawner : MonoBehaviour
 
         if (this.noGapsForNextFrames == 0 && this.randomEnabled && this.frames > 10 && this.removedFloorCount == 0 && Random.value > 0.95f)
         {
-            this.removedFloorCount = 10;
+            if(this.happiness > 0)
+            {
+                this.removedFloorCount = 5;
+            } else
+            {
+                this.removedFloorCount = 10;
+            }
         }
 
         GameObject floor = this.floors[this.floorIndex];
