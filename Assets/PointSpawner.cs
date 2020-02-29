@@ -13,7 +13,7 @@ public class PointSpawner : MonoBehaviour
     private int minusPointIndex = 0;
     private int pointAmount = 10;
 
-    private float nextSpawnTime = 6f;
+    private float nextSpawnTime = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,7 @@ public class PointSpawner : MonoBehaviour
             {
                 SpawnMinusPoint();
             }
-            nextSpawnTime += 2f;
+            nextSpawnTime += 1f * Random.Range(1, 2);
         }
     }
 
@@ -65,7 +65,7 @@ public class PointSpawner : MonoBehaviour
         GameObject floor = this.floorSpawner.GetLastFloor();
 
         GameObject plusPoint = points[index];
-        float height = Random.value > 0.5f ? 2f : 5f;
+        float height = Random.value > 0.5f ? 2f : 6f;
         plusPoint.transform.position = new Vector3(
             floor.transform.position.x,
             floor.transform.position.y + height,

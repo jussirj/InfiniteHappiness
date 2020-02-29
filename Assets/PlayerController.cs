@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private float playerPositionY = -100f;
 
     private float zDistanceToCamera = 3f;
-    private float zSpeed = 0.05f;
+    private float zSpeed = 0.1f;
 
     private bool stopped = false;
 
@@ -37,8 +37,6 @@ public class PlayerController : MonoBehaviour
         {
           jumping = false;
         }
-
-
 
         if(!stopped){
           if (jumping)
