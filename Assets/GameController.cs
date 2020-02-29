@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private float winLimit = 1.5f;
-    private float loseLimit = -1.5f;
+    private float winLimit = 1f;
+    private float loseLimit = -1f;
     private float happiness = 0f;
 
     private GameObject winScreen;
