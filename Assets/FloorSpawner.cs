@@ -9,7 +9,7 @@ public class FloorSpawner : MonoBehaviour
     private GameObject floor;
 
     private float distanceToCamera = 7f;
-    private float distanceToCameraY = 10f;
+    private float distanceToCameraY = 12f;
     private float zSpeed = 1f;
 
     private int floorAmount = 20;
@@ -34,7 +34,7 @@ public class FloorSpawner : MonoBehaviour
             transform.position = new Vector3(transform.position.x, this.cameraTransform.position.y - distanceToCameraY, transform.position.z + zSpeed);
             SpawnFloor();
         }
-            
+
     }
 
     void InstantiateFloors()

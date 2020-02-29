@@ -9,10 +9,12 @@ public class Camera : MonoBehaviour
     private float happinessStep = 0.01f;
 
     private float zSpeed = 0.05f;
+    private GameObject backgroundGradient;
 
     // Start is called before the first frame update
     void Start()
     {
+        this.backgroundGradient = GameObject.Find("BackgroundGradient");
     }
 
     // Update is called once per frame
@@ -21,12 +23,12 @@ public class Camera : MonoBehaviour
         /* TODO deprecated */
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            this.happiness += this.happinessStep;
+            this.ChangeHappiness(true);
             print("HAPPINESS: " + this.happiness);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            this.happiness -= this.happinessStep;
+            this.ChangeHappiness(false);
             print("HAPPINESS: " + this.happiness);
         }
 
@@ -42,9 +44,20 @@ public class Camera : MonoBehaviour
         if (happiness)
         {
             this.happiness += this.happinessStep;
-        } else
+            this.backgroundGradient.transform.position = new Vector3(
+                this.backgroundGradient.transform.position.x,
+                this.backgroundGradient.transform.position.y - this.happinessStep * 1000,
+                this.backgroundGradient.transform.position.z
+            );
+        }
+        else
         {
             this.happiness -= this.happinessStep;
+            this.backgroundGradient.transform.position = new Vector3(
+            this.backgroundGradient.transform.position.x,
+            this.backgroundGradient.transform.position.y + this.happinessStep * 1000,
+            this.backgroundGradient.transform.position.z
+        );
         }
     }
 }
