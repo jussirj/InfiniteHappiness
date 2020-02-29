@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class FloorSpawner : MonoBehaviour
 {
+    private float happiness = 0;
+    private float happinessStep = 0.15f;
 
-    private Transform cameraTransform;
+    private Camera cameraScript;
+    private Transform playerTransform;
     private GameObject floor;
 
-    private float distanceToCamera = 7f;
-    private float distanceToCameraY = 12f;
+    private float distanceToPlayer = 10f;
     private float zSpeed = 1f;
 
     private int floorAmount = 20;
@@ -21,7 +23,8 @@ public class FloorSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.cameraTransform = GameObject.Find("Main Camera").transform;
+        this.playerTransform = GameObject.Find("Player").transform;
+        this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
         this.floor = GameObject.Find("Cube");
         InstantiateFloors();
     }
@@ -29,9 +32,21 @@ public class FloorSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.z - this.cameraTransform.position.z < distanceToCamera)
+        /* TODO deprecated */
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            transform.position = new Vector3(transform.position.x, this.cameraTransform.position.y - distanceToCameraY, transform.position.z + zSpeed);
+            this.ChangeHappiness(true);
+            print("HAPPINESS: " + this.happiness);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            this.ChangeHappiness(false);
+            print("HAPPINESS: " + this.happiness);
+        }
+
+        if (transform.position.z - this.playerTransform.position.z < distanceToPlayer)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + this.happiness, transform.position.z + zSpeed);
             SpawnFloor();
         }
 
@@ -65,5 +80,18 @@ public class FloorSpawner : MonoBehaviour
     public GameObject GetLastFloor()
     {
         return this.lastFloor;
+    }
+
+    public void ChangeHappiness(bool happiness)
+    {
+        if (happiness)
+        {
+            this.happiness += this.happinessStep;
+        }
+        else
+        {
+            this.happiness -= this.happinessStep;
+        }
+        this.cameraScript.UpdateBackground(this.happiness);
     }
 }

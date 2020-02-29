@@ -4,60 +4,35 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-
-    private float happiness = 0;
-    private float happinessStep = 0.01f;
-
-    private float zSpeed = 0.05f;
     private GameObject backgroundGradient;
+    private GameObject player;
+
+    private float targetY;
 
     // Start is called before the first frame update
     void Start()
     {
         this.backgroundGradient = GameObject.Find("BackgroundGradient");
+        this.player = GameObject.Find("Player");
+        this.targetY = this.player.transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /* TODO deprecated */
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            this.ChangeHappiness(true);
-            print("HAPPINESS: " + this.happiness);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            this.ChangeHappiness(false);
-            print("HAPPINESS: " + this.happiness);
-        }
-
         transform.position = new Vector3(
             transform.position.x,
-            transform.position.y + happiness,
-            transform.position.z + zSpeed
+            this.player.transform.position.y + 10f,
+            this.player.transform.position.z + 5f
         );
     }
 
-    public void ChangeHappiness(bool happiness)
+    public void UpdateBackground(float happiness)
     {
-        if (happiness)
-        {
-            this.happiness += this.happinessStep;
-            this.backgroundGradient.transform.position = new Vector3(
-                this.backgroundGradient.transform.position.x,
-                this.backgroundGradient.transform.position.y - this.happinessStep * 1000,
-                this.backgroundGradient.transform.position.z
-            );
-        }
-        else
-        {
-            this.happiness -= this.happinessStep;
-            this.backgroundGradient.transform.position = new Vector3(
+        this.backgroundGradient.transform.position = new Vector3(
             this.backgroundGradient.transform.position.x,
-            this.backgroundGradient.transform.position.y + this.happinessStep * 1000,
+            this.backgroundGradient.transform.position.y - happiness * 50f,
             this.backgroundGradient.transform.position.z
         );
-        }
     }
 }

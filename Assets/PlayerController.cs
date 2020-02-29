@@ -5,9 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float jumpHeight = 4f;
-    private Transform cameraTransform;
     private bool jumping = false;
-    private Camera cameraScript;
+    private FloorSpawner floorSpawner;
     private float startLevel = 0f;
     private float loseLimit = 30f;
     private float winLimit = 30f;
@@ -16,12 +15,12 @@ public class PlayerController : MonoBehaviour
     private GameObject loseScreen;
 
     private float zDistanceToCamera = 3f;
+    private float zSpeed = 0.05f;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.cameraTransform = GameObject.Find("Main Camera").transform;
-        this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
+        this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
         startLevel = transform.position.y;
         this.winScreen = GameObject.Find("WinScreen");
         this.loseScreen = GameObject.Find("LoseScreen");
@@ -59,7 +58,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(
               transform.position.x,
               transform.position.y + 0.1f,
-              cameraTransform.position.z - zDistanceToCamera
+              transform.position.z + this.zSpeed
             );
           }
         } else {
@@ -67,13 +66,13 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(
               transform.position.x,
               transform.position.y + 0.05f,
-              cameraTransform.position.z - zDistanceToCamera
+              transform.position.z + this.zSpeed
             );
           } else {
             transform.position = new Vector3(
                 transform.position.x,
                 transform.position.y - 0.05f,
-                cameraTransform.position.z - zDistanceToCamera
+                transform.position.z + this.zSpeed
               );
           }
         }
@@ -88,12 +87,12 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "PlusPoint")
         {
             other.gameObject.SetActive(false);
-            this.cameraScript.ChangeHappiness(true);
+            this.floorSpawner.ChangeHappiness(true);
         }
         if (other.gameObject.tag == "MinusPoint")
         {
             other.gameObject.SetActive(false);
-            this.cameraScript.ChangeHappiness(false);
+            this.floorSpawner.ChangeHappiness(false);
         }
     }
 }
