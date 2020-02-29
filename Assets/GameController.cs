@@ -54,7 +54,6 @@ public class GameController : MonoBehaviour
 
         if (gameEnd && Input.GetKey(KeyCode.Space))
         {
-            print("reset");
             this.winScreen.SetActive(false);
             this.loseScreen.SetActive(false);
             this.player.Reset();

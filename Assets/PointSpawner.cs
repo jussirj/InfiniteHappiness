@@ -94,6 +94,7 @@ public class PointSpawner : MonoBehaviour
 
     public void Reset()
     {
-        this. nextSpawnTime = 0f;
+        // TODO: Reset points properly
+        this.nextSpawnTime = 3600f;
     }
 }
