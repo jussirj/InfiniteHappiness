@@ -11,6 +11,8 @@ public class Camera : MonoBehaviour
     private float distanceToPlayerY = 20f;
     private float distanceToPlayerZ = 10f;
     private float distanceToPlayerYThreshold = 0.5f;
+    private Vector3 initialCameraPosition;
+    private Vector3 initialBackgroundPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,9 @@ public class Camera : MonoBehaviour
         this.backgroundGradient = GameObject.Find("BackgroundGradient");
         this.player = GameObject.Find("Player");
         this.targetY = this.player.transform.position.y + this.distanceToPlayerY;
+        this.initialCameraPosition = transform.position;
+        UpdateBackground(0);
+        this.initialBackgroundPosition = this.backgroundGradient.transform.position;
     }
 
     // Update is called once per frame
@@ -55,5 +60,11 @@ public class Camera : MonoBehaviour
             this.backgroundGradient.transform.position.y - happiness * 50f,
             this.backgroundGradient.transform.position.z
         );
+    }
+
+    public void Reset()
+    {
+        transform.position = this.initialCameraPosition;
+        this.backgroundGradient.transform.position = initialBackgroundPosition;
     }
 }

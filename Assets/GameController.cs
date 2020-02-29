@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     private PlayerController player;
     private Cub cub;
     private PointSpawner pointSpawner;
+    private Camera camera;
 
     private bool gameEnd = false;
     private bool startScreen = true;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
         this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
         this.player = GameObject.Find("Player").GetComponent<PlayerController>();
         this.pointSpawner = GameObject.Find("PointSpawner").GetComponent<PointSpawner>();
+        this.camera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -70,6 +72,7 @@ public class GameController : MonoBehaviour
             this.loseScreen.SetActive(false);
             this.player.Reset();
             this.floorSpawner.Reset();
+            this.camera.Reset();
             this.gameEnd = false;
             this.cub.Play();
             this.player.Start();

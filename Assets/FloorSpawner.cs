@@ -107,6 +107,7 @@ public class FloorSpawner : MonoBehaviour
     public void Reset()
     {
         this.happiness = 0;
+        this.cameraScript.UpdateBackground(this.happiness);
         transform.position = this.initialPosition;
     }
 }
