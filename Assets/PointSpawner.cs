@@ -58,7 +58,6 @@ public class PointSpawner : MonoBehaviour
         {
             plusPointIndex = 0;
         }
-        print("JOU " + this.plusPointIndex);
         SpawnPoint(plusPointIndex, plusPoints);
         plusPointIndex++;
     }
