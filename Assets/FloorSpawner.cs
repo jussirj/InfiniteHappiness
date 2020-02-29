@@ -20,12 +20,15 @@ public class FloorSpawner : MonoBehaviour
 
     private GameObject lastFloor;
 
+    private Vector3 initialPosition;
+
     // Start is called before the first frame update
     void Start()
     {
         this.playerTransform = GameObject.Find("Player").transform;
         this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
         this.floor = GameObject.Find("Cube");
+        this.initialPosition = transform.position;
         InstantiateFloors();
     }
 
@@ -99,5 +102,11 @@ public class FloorSpawner : MonoBehaviour
     public float GetHappiness()
     {
         return this.happiness;
+    }
+
+    public void Reset()
+    {
+        this.happiness = 0;
+        transform.position = this.initialPosition;
     }
 }

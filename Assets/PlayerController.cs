@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour
 
     private bool stopped = false;
 
+    private Vector3 initialPosition;
+
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
+        this.initialPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -88,5 +91,11 @@ public class PlayerController : MonoBehaviour
     public void Stop()
     {
         this.stopped = true;
+    }
+
+    public void Reset()
+    {
+        transform.position = this.initialPosition;
+        this.stopped = false;
     }
 }

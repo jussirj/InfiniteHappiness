@@ -13,7 +13,7 @@ public class PointSpawner : MonoBehaviour
     private int minusPointIndex = 0;
     private int pointAmount = 10;
 
-    private float nextSpawnTime = 5f;
+    private float nextSpawnTime = 5f; // init = Time.realtimeSinceStartup
 
     // Start is called before the first frame update
     void Start()
@@ -90,5 +90,10 @@ public class PointSpawner : MonoBehaviour
             minusPoints.Add(this.minusPoint);
             this.minusPoint.SetActive(false);
         }
+    }
+
+    public void Reset()
+    {
+        this. nextSpawnTime = 0f;
     }
 }

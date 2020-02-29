@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour
     private FloorSpawner floorSpawner;
     private PlayerController player;
     private Cub cub;
+    private PointSpawner pointSpawner;
+
+    private bool gameEnd = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,7 @@ public class GameController : MonoBehaviour
         this.cub = GameObject.Find("Cub").GetComponent<Cub>();
         this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
         this.player = GameObject.Find("Player").GetComponent<PlayerController>();
+        this.pointSpawner = GameObject.Find("PointSpawner").GetComponent<PointSpawner>();
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class GameController : MonoBehaviour
             this.loseScreen.SetActive(true);
             this.cub.Stop();
             this.player.Stop();
+            this.gameEnd = true;
         }
 
         if (this.happiness >= winLimit)
@@ -44,6 +49,20 @@ public class GameController : MonoBehaviour
             this.winScreen.SetActive(true);
             this.cub.Stop();
             this.player.Stop();
+            this.gameEnd = true;
+        }
+
+        if (gameEnd && Input.GetKey(KeyCode.Space))
+        {
+            print("reset");
+            this.winScreen.SetActive(false);
+            this.loseScreen.SetActive(false);
+            this.player.Reset();
+            this.floorSpawner.Reset();
+            this.pointSpawner.Reset();
+            this.gameEnd = false;
+            this.cub.Play();
+            this.player.Start();
         }
     }
 }

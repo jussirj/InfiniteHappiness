@@ -6,7 +6,7 @@ public class Cub : MonoBehaviour
 {
     public Movin cub;
 
-    void Start()
+    public void Start()
     {
 
         cub = new Movin(transform, "json/cub");
@@ -22,6 +22,11 @@ public class Cub : MonoBehaviour
     public void Stop()
     {
         cub.Stop();
+    }
+
+    public void Play()
+    {
+        cub.Play();
     }
 
 }
