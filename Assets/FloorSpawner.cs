@@ -20,12 +20,30 @@ public class FloorSpawner : MonoBehaviour
 
     private GameObject lastFloor;
 
+    private float winLimit = 1.5f;
+    private float loseLimit = -1.5f;
+
+    private GameObject winScreen;
+    private GameObject loseScreen;
+    private Cub cub;
+    private bool stopped;
+
+    private PlayerController player;
+
     // Start is called before the first frame update
     void Start()
     {
         this.playerTransform = GameObject.Find("Player").transform;
         this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
         this.floor = GameObject.Find("Cube");
+
+        this.winScreen = GameObject.Find("WinScreen");
+        this.loseScreen = GameObject.Find("LoseScreen");
+        this.winScreen.SetActive(false);
+        this.loseScreen.SetActive(false);
+        this.cub = GameObject.Find("Cub").GetComponent<Cub>();
+        this.player = GameObject.Find("Player").GetComponent<PlayerController>();
+
         InstantiateFloors();
     }
 
@@ -50,6 +68,19 @@ public class FloorSpawner : MonoBehaviour
             SpawnFloor();
         }
 
+        if (this.happiness <= loseLimit)
+        {
+            this.loseScreen.SetActive(true);
+            this.cub.Stop();
+            this.player.Stop();
+        }
+
+        if (this.happiness >= winLimit)
+        {
+            this.winScreen.SetActive(true);
+            this.cub.Stop();
+            this.player.Stop();
+        }
     }
 
     void InstantiateFloors()
@@ -93,5 +124,10 @@ public class FloorSpawner : MonoBehaviour
             this.happiness -= this.happinessStep;
         }
         this.cameraScript.UpdateBackground(this.happiness);
+    }
+
+    public float GetHappiness()
+    {
+        return this.happiness;
     }
 }
