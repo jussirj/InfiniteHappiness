@@ -16,10 +16,20 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initialPosition;
 
+    private GameObject eatNegativeSound;
+    private GameObject eatPositiveSound;
+
+    private List<GameObject> barkSounds = new List<GameObject>();
+
     // Start is called before the first frame update
     public void Start()
     {
         this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
+        this.barkSounds.Add(GameObject.Find("cub_bark_1"));
+        this.barkSounds.Add(GameObject.Find("cub_bark_2"));
+        this.barkSounds.Add(GameObject.Find("cub_bark_3"));
+        this.eatNegativeSound = GameObject.Find("cub_eat_chili");
+        this.eatPositiveSound = GameObject.Find("cub_eat_candy");
         this.initialPosition = transform.position;
     }
 
@@ -29,44 +39,52 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-          if(transform.position.y <= playerPositionY)
-          {
-            jumping = true;
-          }
+            if (transform.position.y <= playerPositionY)
+            {
+                jumping = true;
+                this.barkSounds[Mathf.RoundToInt(Random.Range(0, 2))].GetComponent<AudioSource>().Play();
+            }
         }
 
         if (transform.position.y > playerPositionY + jumpHeight)
         {
-          jumping = false;
+            jumping = false;
         }
 
 
 
-        if(!stopped){
-          if (jumping)
-          {
-            if(transform.position.y < playerPositionY + jumpHeight) {
-              transform.position = new Vector3(
-                transform.position.x,
-                transform.position.y + 0.1f,
-                transform.position.z + this.zSpeed
-              );
+        if (!stopped)
+        {
+            if (jumping)
+            {
+                if (transform.position.y < playerPositionY + jumpHeight)
+                {
+                    transform.position = new Vector3(
+                      transform.position.x,
+                      transform.position.y + 0.1f,
+                      transform.position.z + this.zSpeed
+                    );
+                }
             }
-          } else {
-            if (transform.position.y < playerPositionY){
-              transform.position = new Vector3(
-                transform.position.x,
-                transform.position.y + 0.05f,
-                transform.position.z + this.zSpeed
-              );
-            } else {
-              transform.position = new Vector3(
-                  transform.position.x,
-                  transform.position.y - 0.05f,
-                  transform.position.z + this.zSpeed
-                );
+            else
+            {
+                if (transform.position.y < playerPositionY)
+                {
+                    transform.position = new Vector3(
+                      transform.position.x,
+                      transform.position.y + 0.05f,
+                      transform.position.z + this.zSpeed
+                    );
+                }
+                else
+                {
+                    transform.position = new Vector3(
+                        transform.position.x,
+                        transform.position.y - 0.05f,
+                        transform.position.z + this.zSpeed
+                      );
+                }
             }
-          }
         }
     }
 
@@ -80,11 +98,13 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             this.floorSpawner.ChangeHappiness(true);
+            this.eatPositiveSound.GetComponent<AudioSource>().Play();
         }
         if (other.gameObject.tag == "MinusPoint")
         {
             other.gameObject.SetActive(false);
             this.floorSpawner.ChangeHappiness(false);
+            this.eatNegativeSound.GetComponent<AudioSource>().Play();
         }
     }
 
