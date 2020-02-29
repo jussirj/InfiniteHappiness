@@ -8,7 +8,8 @@ public class Camera : MonoBehaviour
     private GameObject player;
 
     private float targetY;
-    private float distanceToPlayerY = 10f;
+    private float distanceToPlayerY = 20f;
+    private float distanceToPlayerZ = 10f;
     private float distanceToPlayerYThreshold = 0.5f;
 
     // Start is called before the first frame update
@@ -27,21 +28,21 @@ public class Camera : MonoBehaviour
             transform.position = new Vector3(
                transform.position.x,
                transform.position.y - 0.05f,
-               this.player.transform.position.z + 5f
+               this.player.transform.position.z + this.distanceToPlayerZ
            );
         } else if (transform.position.y < this.targetY - this.distanceToPlayerYThreshold)
         {
            transform.position = new Vector3(
                transform.position.x,
                transform.position.y + 0.05f,
-               this.player.transform.position.z + 5f
+               this.player.transform.position.z + this.distanceToPlayerZ
            );
         } else
         {
             transform.position = new Vector3(
                transform.position.x,
                transform.position.y,
-               this.player.transform.position.z + 5f
+               this.player.transform.position.z + this.distanceToPlayerZ
            );
         }
         this.targetY = this.player.transform.position.y + this.distanceToPlayerY;

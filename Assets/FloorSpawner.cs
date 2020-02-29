@@ -11,10 +11,10 @@ public class FloorSpawner : MonoBehaviour
     private Transform playerTransform;
     private GameObject floor;
 
-    private float distanceToPlayer = 10f;
+    private float distanceToPlayer = 20f;
     private float zSpeed = 1f;
 
-    private int floorAmount = 20;
+    private int floorAmount = 30;
     private List<GameObject> floors = new List<GameObject>();
     private int floorIndex = 0;
 
