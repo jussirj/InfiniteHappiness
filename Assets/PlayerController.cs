@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 1f;
+    private float jumpHeight = 4f;
     private Transform cameraTransform;
-    //private Rigidbody rb;
+    private bool jumping = false;
 
-    private float targetY = -100f;
+    private float playerPositionY = -100f;
 
     private float zDistanceToCamera = 3f;
 
@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
       this.cameraTransform = GameObject.Find("Main Camera").transform;
-      //this.rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -24,23 +23,44 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            //this.rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+          if(transform.position.y <= playerPositionY)
+          {
+            jumping = true;
+          }
         }
 
-        if (transform.position.y < targetY)
+        if (transform.position.y > playerPositionY + jumpHeight)
         {
-           transform.position = new Vector3(
+          print("jump off");
+          jumping = false;
+        }
+
+        if (jumping)
+        {
+          if(transform.position.y < playerPositionY + jumpHeight){
+            print("jumping");
+            transform.position = new Vector3(
+              transform.position.x,
+              transform.position.y + 0.1f,
+              cameraTransform.position.z - zDistanceToCamera
+            );
+          }
+        } else {
+          if (transform.position.y < playerPositionY){
+            print("2222");
+            transform.position = new Vector3(
               transform.position.x,
               transform.position.y + 0.05f,
               cameraTransform.position.z - zDistanceToCamera
             );
-        } else
-        {
+          } else{
+            print("3333");
             transform.position = new Vector3(
-               transform.position.x,
-               transform.position.y - 0.05f,
-               cameraTransform.position.z - zDistanceToCamera
-             );
+                transform.position.x,
+                transform.position.y - 0.05f,
+                cameraTransform.position.z - zDistanceToCamera
+              );
+          }
         }
     }
 
@@ -48,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Floor")
         {
-            this.targetY = other.transform.position.y + 2;
+            this.playerPositionY = other.transform.position.y + 2;
         }
     }
 }
