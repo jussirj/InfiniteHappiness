@@ -18,7 +18,10 @@ public class FloorSpawner : MonoBehaviour
     private List<GameObject> floors = new List<GameObject>();
     private int floorIndex = 0;
 
+    private int removedFloorCount = 0;
+    private int frames = 0;
     private GameObject lastFloor;
+    private bool randomEnabled = false;
 
     private Vector3 initialPosition;
 
@@ -50,7 +53,7 @@ public class FloorSpawner : MonoBehaviour
         if (transform.position.z - this.playerTransform.position.z < distanceToPlayer)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + this.happiness, transform.position.z + zSpeed);
-            SpawnFloor();
+            SpawnFloor();    
         }
 
 
@@ -70,15 +73,31 @@ public class FloorSpawner : MonoBehaviour
 
     void SpawnFloor()
     {
+        this.frames++;
+
         if (this.floorIndex > this.floors.Count - 1)
         {
             this.floorIndex = 0;
         }
+
+        if (this.randomEnabled && this.frames > 100 && this.removedFloorCount == 0 && Random.value > 0.95f)
+        {
+            this.removedFloorCount = 10;
+        }
+
         GameObject floor = this.floors[this.floorIndex];
         floor.transform.position = transform.position;
-        floor.SetActive(true);
         this.floorIndex++;
         this.lastFloor = floor;
+
+        if (this.removedFloorCount > 0)
+        {
+            this.removedFloorCount--;
+            floor.SetActive(false);
+        }
+        else {
+            floor.SetActive(true);
+        }
     }
 
     public GameObject GetLastFloor()
@@ -107,7 +126,13 @@ public class FloorSpawner : MonoBehaviour
     public void Reset()
     {
         this.happiness = 0;
+        this.frames = 0;
         this.cameraScript.UpdateBackground(this.happiness);
         transform.position = this.initialPosition;
+    }
+
+    public void SetRandomEnabled(bool randomEnabled)
+    {
+        this.randomEnabled = randomEnabled;
     }
 }

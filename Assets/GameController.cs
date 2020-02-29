@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     {
         this.happiness = this.floorSpawner.GetHappiness();
 
-        if (this.happiness <= loseLimit)
+        if (this.happiness <= loseLimit || this.player.transform.position.y < (this.floorSpawner.GetLastFloor().transform.position.y - 20f))
         {
             this.loseScreen.SetActive(true);
             this.cub.Stop();
@@ -59,11 +59,14 @@ public class GameController : MonoBehaviour
             this.gameEnd = true;
         }
 
+
+
         if (startScreen && Input.GetKey(KeyCode.Space))
         {
             this.pointSpawner.Play();
             this.startScreen = false;
             this.introCanvas.SetActive(false);
+            this.floorSpawner.SetRandomEnabled(true);
         }
 
         if (gameEnd && Input.GetKey(KeyCode.Space))
@@ -78,6 +81,8 @@ public class GameController : MonoBehaviour
             this.player.Start();
             this.pointSpawner.Play();
             this.startScreen = true;
+            this.floorSpawner.SetRandomEnabled(false);
+
         }
     }
 }

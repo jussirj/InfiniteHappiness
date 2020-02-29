@@ -86,13 +86,14 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Floor")
         {
-            this.playerPositionY = other.transform.position.y + 2;
+            this.playerPositionY = other.transform.position.y - 5;
         }
         if (other.gameObject.tag == "PlusPoint")
         {
@@ -105,6 +106,15 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             this.floorSpawner.ChangeHappiness(false);
             this.eatNegativeSound.GetComponent<AudioSource>().Play();
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!this.jumping && other.gameObject.tag == "Floor")
+        {
+            this.playerPositionY = -5000f;
         }
     }
 
