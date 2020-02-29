@@ -18,6 +18,7 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* TODO deprecated */
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             this.happiness += this.happinessStep;
@@ -34,5 +35,16 @@ public class Camera : MonoBehaviour
             transform.position.y + happiness,
             transform.position.z + zSpeed
         );
+    }
+
+    public void ChangeHappiness(bool happiness)
+    {
+        if (happiness)
+        {
+            this.happiness += this.happinessStep;
+        } else
+        {
+            this.happiness -= this.happinessStep;
+        }
     }
 }

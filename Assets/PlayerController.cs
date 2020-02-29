@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 4f;
     private Transform cameraTransform;
     private bool jumping = false;
+    private Camera cameraScript;
 
     private float playerPositionY = -100f;
 
@@ -15,7 +16,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      this.cameraTransform = GameObject.Find("Main Camera").transform;
+        this.cameraTransform = GameObject.Find("Main Camera").transform;
+        this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -31,14 +33,12 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.y > playerPositionY + jumpHeight)
         {
-          print("jump off");
           jumping = false;
         }
 
         if (jumping)
         {
-          if(transform.position.y < playerPositionY + jumpHeight){
-            print("jumping");
+          if(transform.position.y < playerPositionY + jumpHeight) {
             transform.position = new Vector3(
               transform.position.x,
               transform.position.y + 0.1f,
@@ -47,14 +47,12 @@ public class PlayerController : MonoBehaviour
           }
         } else {
           if (transform.position.y < playerPositionY){
-            print("2222");
             transform.position = new Vector3(
               transform.position.x,
               transform.position.y + 0.05f,
               cameraTransform.position.z - zDistanceToCamera
             );
-          } else{
-            print("3333");
+          } else {
             transform.position = new Vector3(
                 transform.position.x,
                 transform.position.y - 0.05f,
@@ -69,6 +67,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Floor")
         {
             this.playerPositionY = other.transform.position.y + 2;
+        }
+        if (other.gameObject.tag == "PlusPoint")
+        {
+            this.cameraScript.ChangeHappiness(true);
+        }
+        if (other.gameObject.tag == "MinusPoint")
+        {
+            this.cameraScript.ChangeHappiness(false);
         }
     }
 }
