@@ -5,9 +5,9 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
 
-    private bool happiness = false;
+    private float happiness = 0;
+    private float happinessStep = 0.01f;
 
-    private float ySpeed = 0.02f;
     private float zSpeed = 0.05f;
 
     private Transform PlayerStopperTransform;
@@ -21,18 +21,23 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            happiness = true;
+            this.happiness += this.happinessStep;
+            print("HAPPINESS: " + this.happiness);
+            /*
             this.PlayerStopperTransform.localPosition = new Vector3(
                 this.PlayerStopperTransform.localPosition.x,
                 -5.5f,
                 this.PlayerStopperTransform.localPosition.z
             );
+            */
         }
-        else
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            happiness = false;
+            this.happiness -= this.happinessStep;
+            print("HAPPINESS: " + this.happiness);
+            /*
             if (this.PlayerStopperTransform.localPosition.y < -1.5f)
             {
                 this.PlayerStopperTransform.localPosition = new Vector3(
@@ -41,8 +46,13 @@ public class Camera : MonoBehaviour
                 this.PlayerStopperTransform.localPosition.z
             );
             }
+            */
         }
-        float positionY = happiness ? transform.position.y + ySpeed : transform.position.y - ySpeed;
-        transform.position = new Vector3(transform.position.x, positionY, transform.position.z + zSpeed);
+
+        transform.position = new Vector3(
+            transform.position.x,
+            transform.position.y + happiness,
+            transform.position.z + zSpeed
+        );
     }
 }
