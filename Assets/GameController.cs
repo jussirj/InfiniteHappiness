@@ -11,6 +11,9 @@ public class GameController : MonoBehaviour
     private GameObject winScreen;
     private GameObject loseScreen;
     private GameObject introCanvas;
+    private GameObject gameOverSound;
+    private GameObject gameWonSound;
+
 
     private FloorSpawner floorSpawner;
     private PlayerController player;
@@ -34,6 +37,8 @@ public class GameController : MonoBehaviour
         this.player = GameObject.Find("Player").GetComponent<PlayerController>();
         this.pointSpawner = GameObject.Find("PointSpawner").GetComponent<PointSpawner>();
         this.camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        this.gameOverSound = GameObject.Find("game_over");
+        this.gameWonSound = GameObject.Find("game_won");
     }
 
     // Update is called once per frame
@@ -48,6 +53,7 @@ public class GameController : MonoBehaviour
             this.player.Stop();
             this.pointSpawner.Reset();
             this.gameEnd = true;
+            this.gameOverSound.GetComponent<AudioSource>().Play();
         }
 
         if (this.happiness >= winLimit)
@@ -57,6 +63,7 @@ public class GameController : MonoBehaviour
             this.player.Stop();
             this.pointSpawner.Reset();
             this.gameEnd = true;
+            this.gameWonSound.GetComponent<AudioSource>().Play();
         }
 
 
