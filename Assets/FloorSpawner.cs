@@ -22,6 +22,7 @@ public class FloorSpawner : MonoBehaviour
     private int frames = 0;
     private GameObject lastFloor;
     private bool randomEnabled = false;
+    private int noGapsForNextFrames = 0;
 
     private Vector3 initialPosition;
 
@@ -75,12 +76,16 @@ public class FloorSpawner : MonoBehaviour
     {
         this.frames++;
 
+        if(noGapsForNextFrames > 0) { 
+            this.noGapsForNextFrames--;
+        }
+
         if (this.floorIndex > this.floors.Count - 1)
         {
             this.floorIndex = 0;
         }
 
-        if (this.randomEnabled && this.frames > 100 && this.removedFloorCount == 0 && Random.value > 0.95f)
+        if (this.noGapsForNextFrames == 0 && this.randomEnabled && this.frames > 10 && this.removedFloorCount == 0 && Random.value > 0.95f)
         {
             this.removedFloorCount = 10;
         }
@@ -94,6 +99,10 @@ public class FloorSpawner : MonoBehaviour
         {
             this.removedFloorCount--;
             floor.SetActive(false);
+            if(this.removedFloorCount == 0)
+            {
+                this.noGapsForNextFrames = 10;
+            }
         }
         else {
             floor.SetActive(true);
