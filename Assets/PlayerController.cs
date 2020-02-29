@@ -6,7 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 1f;
     private Transform cameraTransform;
-    private Rigidbody rb;
+    //private Rigidbody rb;
+
+    private float targetY = -100f;
 
     private float jumpSpeed = 0.05f;
 
@@ -14,7 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
       this.cameraTransform = GameObject.Find("Main Camera").transform;
-      this.rb = GetComponent<Rigidbody>();
+      //this.rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -22,16 +24,35 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            this.rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            //this.rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         }
-        transform.position = new Vector3(
-          transform.position.x,
-          transform.position.y,
-          cameraTransform.position.z - 3f
-        );
+
+        if (transform.position.y < targetY)
+        {
+           transform.position = new Vector3(
+              transform.position.x,
+              transform.position.y + 0.05f,
+              cameraTransform.position.z - 0f
+            );
+        } else
+        {
+            transform.position = new Vector3(
+               transform.position.x,
+               transform.position.y - 0.05f,
+               cameraTransform.position.z - 0f
+             );
+        }
+
+
 
 
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Floor")
+        {
+            this.targetY = other.transform.position.y + 2;
+        }
+    }
 }
