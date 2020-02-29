@@ -70,10 +70,12 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.tag == "PlusPoint")
         {
+            other.gameObject.SetActive(false);
             this.cameraScript.ChangeHappiness(true);
         }
         if (other.gameObject.tag == "MinusPoint")
         {
+            other.gameObject.SetActive(false);
             this.cameraScript.ChangeHappiness(false);
         }
     }
