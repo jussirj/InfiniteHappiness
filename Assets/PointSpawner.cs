@@ -65,7 +65,7 @@ public class PointSpawner : MonoBehaviour
         GameObject floor = this.floorSpawner.GetLastFloor();
 
         GameObject plusPoint = points[index];
-        float height = Random.value > 0.5f ? 2f : 6f;
+        float height = Random.value > 0.5f ? 2f : 5f;
         plusPoint.transform.position = new Vector3(
             floor.transform.position.x,
             floor.transform.position.y + height,
