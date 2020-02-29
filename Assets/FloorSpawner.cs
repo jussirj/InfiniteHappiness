@@ -18,6 +18,7 @@ public class FloorSpawner : MonoBehaviour
     private List<GameObject> floors = new List<GameObject>();
     private int floorIndex = 0;
 
+    private int removedFloorCount = 0;
     private GameObject lastFloor;
 
     private Vector3 initialPosition;
@@ -50,7 +51,7 @@ public class FloorSpawner : MonoBehaviour
         if (transform.position.z - this.playerTransform.position.z < distanceToPlayer)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + this.happiness, transform.position.z + zSpeed);
-            SpawnFloor();
+            SpawnFloor();    
         }
 
 
@@ -74,11 +75,25 @@ public class FloorSpawner : MonoBehaviour
         {
             this.floorIndex = 0;
         }
+
+        if (this.removedFloorCount == 0 && Random.value > 0.95f)
+        {
+            this.removedFloorCount = 10;
+        }
+
         GameObject floor = this.floors[this.floorIndex];
         floor.transform.position = transform.position;
-        floor.SetActive(true);
         this.floorIndex++;
         this.lastFloor = floor;
+
+        if (this.removedFloorCount > 0)
+        {
+            this.removedFloorCount--;
+            floor.SetActive(false);
+        }
+        else {
+            floor.SetActive(true);
+        }
     }
 
     public GameObject GetLastFloor()
