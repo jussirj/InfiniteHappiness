@@ -21,6 +21,7 @@ public class FloorSpawner : MonoBehaviour
     private int removedFloorCount = 0;
     private int frames = 0;
     private GameObject lastFloor;
+    private bool randomEnabled = false;
 
     private Vector3 initialPosition;
 
@@ -79,7 +80,7 @@ public class FloorSpawner : MonoBehaviour
             this.floorIndex = 0;
         }
 
-        if (this.frames > 100 && this.removedFloorCount == 0 && Random.value > 0.95f)
+        if (this.randomEnabled && this.frames > 100 && this.removedFloorCount == 0 && Random.value > 0.95f)
         {
             this.removedFloorCount = 10;
         }
@@ -125,7 +126,13 @@ public class FloorSpawner : MonoBehaviour
     public void Reset()
     {
         this.happiness = 0;
+        this.frames = 0;
         this.cameraScript.UpdateBackground(this.happiness);
         transform.position = this.initialPosition;
+    }
+
+    public void SetRandomEnabled(bool randomEnabled)
+    {
+        this.randomEnabled = randomEnabled;
     }
 }
