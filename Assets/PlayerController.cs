@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Floor")
+        if (!this.jumping && other.gameObject.tag == "Floor")
         {
             this.playerPositionY = -5000f;
         }
