@@ -287,6 +287,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 139104919240569677, guid: 228c92739cd874befbfa484d04e32359,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.45
+      objectReference: {fileID: 0}
     - target: {fileID: 139104919240569678, guid: 228c92739cd874befbfa484d04e32359,
         type: 3}
       propertyPath: jumpHeight
