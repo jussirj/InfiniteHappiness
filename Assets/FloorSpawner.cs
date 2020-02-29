@@ -16,6 +16,8 @@ public class FloorSpawner : MonoBehaviour
     private List<GameObject> floors = new List<GameObject>();
     private int floorIndex = 0;
 
+    private GameObject lastFloor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +45,8 @@ public class FloorSpawner : MonoBehaviour
             floor.SetActive(false);
             floors.Add(floor);
         }
+        this.floor.SetActive(false);
+        floors.Add(this.floor);
     }
 
     void SpawnFloor()
@@ -55,5 +59,11 @@ public class FloorSpawner : MonoBehaviour
         floor.transform.position = transform.position;
         floor.SetActive(true);
         this.floorIndex++;
+        this.lastFloor = floor;
+    }
+
+    public GameObject GetLastFloor()
+    {
+        return this.lastFloor;
     }
 }
