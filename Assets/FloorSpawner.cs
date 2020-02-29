@@ -19,6 +19,7 @@ public class FloorSpawner : MonoBehaviour
     private int floorIndex = 0;
 
     private int removedFloorCount = 0;
+    private int frames = 0;
     private GameObject lastFloor;
 
     private Vector3 initialPosition;
@@ -71,12 +72,14 @@ public class FloorSpawner : MonoBehaviour
 
     void SpawnFloor()
     {
+        this.frames++;
+
         if (this.floorIndex > this.floors.Count - 1)
         {
             this.floorIndex = 0;
         }
 
-        if (this.removedFloorCount == 0 && Random.value > 0.95f)
+        if (this.frames > 100 && this.removedFloorCount == 0 && Random.value > 0.95f)
         {
             this.removedFloorCount = 10;
         }
