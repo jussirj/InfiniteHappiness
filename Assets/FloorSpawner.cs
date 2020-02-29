@@ -8,7 +8,7 @@ public class FloorSpawner : MonoBehaviour
     private Transform cameraTransform;
     private GameObject floor;
 
-    private float distanceToCamera = 1f;
+    private float distanceToCamera = 7f;
     private float distanceToCameraY = 10f;
     private float zSpeed = 1f;
 
