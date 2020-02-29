@@ -13,7 +13,7 @@ public class PointSpawner : MonoBehaviour
     private int minusPointIndex = 0;
     private int pointAmount = 10;
 
-    private float nextSpawnTime = 5f; // init = Time.realtimeSinceStartup
+    private float nextSpawnTime = 3600f; // init = Time.realtimeSinceStartup
 
     // Start is called before the first frame update
     void Start()
@@ -96,5 +96,10 @@ public class PointSpawner : MonoBehaviour
     {
         // TODO: Reset points properly
         this.nextSpawnTime = 3600f;
+    }
+
+    public void Play()
+    {
+        this.nextSpawnTime = 5f;
     }
 }

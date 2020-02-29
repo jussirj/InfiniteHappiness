@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
 
     private GameObject winScreen;
     private GameObject loseScreen;
+    private GameObject introCanvas;
 
     private FloorSpawner floorSpawner;
     private PlayerController player;
@@ -17,12 +18,14 @@ public class GameController : MonoBehaviour
     private PointSpawner pointSpawner;
 
     private bool gameEnd = false;
+    private bool gameRunning = false;
 
     // Start is called before the first frame update
     void Start()
     {
         this.winScreen = GameObject.Find("WinScreen");
         this.loseScreen = GameObject.Find("LoseScreen");
+        this.introCanvas = GameObject.Find("IntroCanvas");
         this.winScreen.SetActive(false);
         this.loseScreen.SetActive(false);
         this.cub = GameObject.Find("Cub").GetComponent<Cub>();
@@ -42,6 +45,7 @@ public class GameController : MonoBehaviour
             this.cub.Stop();
             this.player.Stop();
             this.gameEnd = true;
+            this.gameRunning = false;
         }
 
         if (this.happiness >= winLimit)
@@ -50,6 +54,14 @@ public class GameController : MonoBehaviour
             this.cub.Stop();
             this.player.Stop();
             this.gameEnd = true;
+            this.gameRunning = false;
+        }
+
+        if (!gameEnd && !gameRunning && Input.GetKey(KeyCode.Space))
+        {
+            this.pointSpawner.Play();
+            this.gameRunning = true;
+            this.introCanvas.SetActive(false);
         }
 
         if (gameEnd && Input.GetKey(KeyCode.Space))
@@ -62,6 +74,7 @@ public class GameController : MonoBehaviour
             this.gameEnd = false;
             this.cub.Play();
             this.player.Start();
+            this.gameRunning = true;
         }
     }
 }
