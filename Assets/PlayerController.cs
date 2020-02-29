@@ -8,8 +8,12 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
     private bool jumping = false;
     private Camera cameraScript;
-
+    private float startLevel = 0f;
+    private float loseLimit = 30f;
+    private float winLimit = 30f;
     private float playerPositionY = -100f;
+    private GameObject winScreen;
+    private GameObject loseScreen;
 
     private float zDistanceToCamera = 3f;
 
@@ -18,6 +22,11 @@ public class PlayerController : MonoBehaviour
     {
         this.cameraTransform = GameObject.Find("Main Camera").transform;
         this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
+        startLevel = transform.position.y;
+        this.winScreen = GameObject.Find("WinScreen");
+        this.loseScreen = GameObject.Find("LoseScreen");
+        this.winScreen.SetActive(false);
+        this.loseScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +43,14 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y > playerPositionY + jumpHeight)
         {
           jumping = false;
+        }
+
+        if(transform.position.y < startLevel - loseLimit) {
+          this.loseScreen.SetActive(true);
+        }
+
+        if(transform.position.y > startLevel + winLimit) {
+          this.winScreen.SetActive(true);
         }
 
         if (jumping)
