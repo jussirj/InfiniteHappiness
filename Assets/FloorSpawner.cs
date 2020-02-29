@@ -85,7 +85,7 @@ public class FloorSpawner : MonoBehaviour
             this.floorIndex = 0;
         }
 
-        if (this.noGapsForNextFrames == 0 && this.randomEnabled && this.frames > 10 && this.removedFloorCount == 0 && Random.value > 0.95f)
+        if (this.noGapsForNextFrames == 0 && this.randomEnabled && this.frames > 100 && this.removedFloorCount == 0 && Random.value > 0.95f)
         {
             if(this.happiness > 0)
             {

@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     private GameObject introCanvas;
     private GameObject gameOverSound;
     private GameObject gameWonSound;
-
+    private GameObject backgroundMusic;
 
     private FloorSpawner floorSpawner;
     private PlayerController player;
@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
         this.camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         this.gameOverSound = GameObject.Find("game_over");
         this.gameWonSound = GameObject.Find("game_won");
+        this.backgroundMusic = GameObject.Find("Audio Source");
     }
 
     // Update is called once per frame
@@ -52,8 +53,11 @@ public class GameController : MonoBehaviour
             this.cub.Stop();
             this.player.Stop();
             this.pointSpawner.Reset();
+            if(this.gameEnd == false) {
+                this.gameOverSound.GetComponent<AudioSource>().Play();
+                this.backgroundMusic.GetComponent<AudioSource>().Stop();
+            }
             this.gameEnd = true;
-            this.gameOverSound.GetComponent<AudioSource>().Play();
         }
 
         if (this.happiness >= winLimit)
@@ -62,11 +66,14 @@ public class GameController : MonoBehaviour
             this.cub.Stop();
             this.player.Stop();
             this.pointSpawner.Reset();
+
+            if(this.gameEnd == false)
+            {
+              this.gameWonSound.GetComponent<AudioSource>().Play();
+              this.backgroundMusic.GetComponent<AudioSource>().Stop();
+            }
             this.gameEnd = true;
-            this.gameWonSound.GetComponent<AudioSource>().Play();
         }
-
-
 
         if (startScreen && Input.GetKey(KeyCode.Space))
         {
@@ -89,7 +96,7 @@ public class GameController : MonoBehaviour
             this.pointSpawner.Play();
             this.startScreen = true;
             this.floorSpawner.SetRandomEnabled(false);
-
+            this.backgroundMusic.GetComponent<AudioSource>().Play();
         }
     }
 }
