@@ -46,8 +46,8 @@ public class GameController : MonoBehaviour
             this.loseScreen.SetActive(true);
             this.cub.Stop();
             this.player.Stop();
-            this.gameEnd = true;
             this.pointSpawner.Reset();
+            this.gameEnd = true;
         }
 
         if (this.happiness >= winLimit)
@@ -55,8 +55,8 @@ public class GameController : MonoBehaviour
             this.winScreen.SetActive(true);
             this.cub.Stop();
             this.player.Stop();
-            this.gameEnd = true;
             this.pointSpawner.Reset();
+            this.gameEnd = true;
         }
 
         if (startScreen && Input.GetKey(KeyCode.Space))

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PointSpawner : MonoBehaviour
 {
     private FloorSpawner floorSpawner;
+    private Transform playerTransform;
     private GameObject plusPoint;
     private GameObject minusPoint;
     private List<GameObject> plusPoints = new List<GameObject>();
@@ -13,7 +14,9 @@ public class PointSpawner : MonoBehaviour
     private int minusPointIndex = 0;
     private int pointAmount = 10;
 
-    private float nextSpawnTime = 3600f; // init = Time.realtimeSinceStartup
+    private float spawnDistanceFromPlayer = 10f;
+    private Vector3 initialPosition;
+    private bool canSpawn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,21 +25,30 @@ public class PointSpawner : MonoBehaviour
         this.minusPoint = GameObject.Find("MinusPoint");
         this.InstantiatePoints();
         this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
+        this.playerTransform = GameObject.Find("Player").transform;
+        this.initialPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (nextSpawnTime < Time.realtimeSinceStartup)
+        if (transform.position.z - this.spawnDistanceFromPlayer < playerTransform.position.z)
         {
-            if (Random.value > 0.5f)
+            if (this.canSpawn)
             {
-                SpawnPlusPoint();
-            } else
-            {
-                SpawnMinusPoint();
+                if (Random.value > 0.5f)
+                {
+                    SpawnPlusPoint();
+                } else
+                {
+                    SpawnMinusPoint();
+                }
             }
-            nextSpawnTime += 1f * Random.Range(1, 2);
+            transform.position = new Vector3(
+                transform.position.x,
+                transform.position.y,
+                transform.position.z + Random.Range(7, 10)
+            );
         }
     }
 
@@ -46,6 +58,7 @@ public class PointSpawner : MonoBehaviour
         {
             plusPointIndex = 0;
         }
+        print("JOU " + this.plusPointIndex);
         SpawnPoint(plusPointIndex, plusPoints);
         plusPointIndex++;
     }
@@ -64,14 +77,14 @@ public class PointSpawner : MonoBehaviour
     {
         GameObject floor = this.floorSpawner.GetLastFloor();
 
-        GameObject plusPoint = points[index];
+        GameObject point = points[index];
         float height = Random.value > 0.5f ? 2f : 6f;
-        plusPoint.transform.position = new Vector3(
+        point.transform.position = new Vector3(
             floor.transform.position.x,
             floor.transform.position.y + height,
             floor.transform.position.z
         );
-        plusPoint.SetActive(true);
+        point.SetActive(true);
     }
 
     void InstantiatePoints()
@@ -94,12 +107,12 @@ public class PointSpawner : MonoBehaviour
 
     public void Reset()
     {
-        // TODO: Reset points properly
-        this.nextSpawnTime = 3600f;
+        this.canSpawn = false;
+        transform.position = this.initialPosition;
     }
 
     public void Play()
     {
-        this.nextSpawnTime = 5f;
+        this.canSpawn = true;
     }
 }
