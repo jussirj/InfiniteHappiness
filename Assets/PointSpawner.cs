@@ -108,6 +108,12 @@ public class PointSpawner : MonoBehaviour
         this.plusPointIndex = 0;
         this.minusPointIndex = 0;
         transform.position = this.initialPosition;
+
+        for (int i = 0; i < this.pointAmount; ++i)
+        {
+            this.plusPoints[i].SetActive(false);
+            this.minusPoints[i].SetActive(false);
+        }
     }
 
     public void Play()
