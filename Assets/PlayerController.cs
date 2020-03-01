@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Hole")
         {
             this.nextFloorPosition = new Vector3(0, -1000, 1000);
-
         }
         if (other.gameObject.tag == "PlusPoint")
         {

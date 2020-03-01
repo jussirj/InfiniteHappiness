@@ -92,7 +92,7 @@ public class FloorSpawner : MonoBehaviour
                 this.removedFloorCount = 5;
             } else
             {
-                this.removedFloorCount = 10;
+                this.removedFloorCount = 8;
             }
         }
 
@@ -107,7 +107,6 @@ public class FloorSpawner : MonoBehaviour
         {
             this.removedFloorCount--;
 
-            // floor.tag = "Hole";
             floor.transform.Find("Cube").gameObject.tag = "Hole";
             floor.transform.Find("bone").gameObject.SetActive(false);
             if (this.removedFloorCount == 0)
