@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
     private float jumpTime = 0;
     private float nextFloorHappiness = 0f;
     
+    private float veloY;
+    private float initialVeloY = 0.5f;
+    private float accY = -0.02f;
+    private float zSpeed = 0.2f;
+    private float jumpDuration = 0.3f;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -37,10 +43,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (transform.position.y < nextFloorPosition.y - 5f)
+            if (transform.position.y < nextFloorPosition.y - 4.5f)
             {
-                this.jumpTime = Time.realtimeSinceStartup + 0.4f;
+                this.jumpTime = Time.realtimeSinceStartup + this.jumpDuration;
                 nextFloorPosition = transform.position + new Vector3(0, -1000, 1500);
+                veloY = this.initialVeloY;
+                Debug.Log("next "+this.nextFloorHappiness);
             }
         }
 
@@ -48,21 +56,27 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.realtimeSinceStartup < this.jumpTime)
             {
+                veloY += accY + Mathf.Clamp(this.nextFloorHappiness,0,1)/120;
+                    transform.position = new Vector3(
+                        transform.position.x,
+                        transform.position.y + veloY,
+                        transform.position.z + this.zSpeed
+                    );
                 if (this.nextFloorHappiness > 0.4)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 1f, 0.8f), 0.2f);
+                    //transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 1f, 0.8f), 0.2f);
                 }
                 else if (this.nextFloorHappiness < -0.4)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 0f, 1.5f), 0.2f);
+                    //transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 0f, 1.5f), 0.2f);
                 } else
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 1f, 1.5f), 0.2f);
+                    //transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 1f, 1.5f), 0.2f);
                 }
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5.5f, 0.15f);
+                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5.5f, this.zSpeed);
             }
         }
 
