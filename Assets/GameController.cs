@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
     private bool startScreen = true;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this.winScreen = GameObject.Find("WinScreen");
         this.loseScreen = GameObject.Find("LoseScreen");
@@ -45,57 +45,59 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.happiness = this.floorSpawner.GetHappiness();
-
-        if (this.happiness <= loseLimit || this.player.transform.position.y < (this.floorSpawner.GetLastFloor().transform.position.y - 20f))
+        if (this.floorSpawner.GetLastFloor())
         {
-            this.loseScreen.SetActive(true);
-            this.cub.Stop();
-            this.player.Stop();
-            this.pointSpawner.Reset();
-            if(this.gameEnd == false) {
-                this.gameOverSound.GetComponent<AudioSource>().Play();
-                this.backgroundMusic.GetComponent<AudioSource>().Stop();
-            }
-            this.gameEnd = true;
-        }
-
-        if (this.happiness >= winLimit)
-        {
-            this.winScreen.SetActive(true);
-            this.cub.Stop();
-            this.player.Stop();
-            this.pointSpawner.Reset();
-
-            if(this.gameEnd == false)
+            this.happiness = this.floorSpawner.GetHappiness();
+            if (this.happiness <= loseLimit || this.player.transform.position.y < (this.floorSpawner.GetLastFloor().transform.position.y - 20f))
             {
-              this.gameWonSound.GetComponent<AudioSource>().Play();
-              this.backgroundMusic.GetComponent<AudioSource>().Stop();
+                this.loseScreen.SetActive(true);
+                this.cub.Stop();
+                this.player.Stop();
+                this.pointSpawner.Reset();
+                if(this.gameEnd == false) {
+                    this.gameOverSound.GetComponent<AudioSource>().Play();
+                    this.backgroundMusic.GetComponent<AudioSource>().Stop();
+                }
+                this.gameEnd = true;
             }
-            this.gameEnd = true;
-        }
 
-        if (startScreen && Input.GetKey(KeyCode.Space))
-        {
-            this.pointSpawner.Play();
-            this.startScreen = false;
-            this.introCanvas.SetActive(false);
-            this.floorSpawner.SetRandomEnabled(true);
-        }
+            if (this.happiness >= winLimit)
+            {
+                this.winScreen.SetActive(true);
+                this.cub.Stop();
+                this.player.Stop();
+                this.pointSpawner.Reset();
 
-        if (gameEnd && Input.GetKey(KeyCode.R))
-        {
-            this.winScreen.SetActive(false);
-            this.loseScreen.SetActive(false);
-            this.player.Reset();
-            this.floorSpawner.Reset();
-            this.camera.Reset();
-            this.gameEnd = false;
-            this.cub.Play();
-            this.player.Start();
-            this.pointSpawner.Play();
-            this.startScreen = true;
-            this.backgroundMusic.GetComponent<AudioSource>().Play();
+                if(this.gameEnd == false)
+                {
+                  this.gameWonSound.GetComponent<AudioSource>().Play();
+                  this.backgroundMusic.GetComponent<AudioSource>().Stop();
+                }
+                this.gameEnd = true;
+            }
+
+            if (startScreen && Input.GetKey(KeyCode.Space))
+            {
+                this.pointSpawner.Play();
+                this.startScreen = false;
+                this.introCanvas.SetActive(false);
+                this.floorSpawner.SetRandomEnabled(true);
+            }
+
+            if (gameEnd && Input.GetKey(KeyCode.R))
+            {
+                this.winScreen.SetActive(false);
+                this.loseScreen.SetActive(false);
+                this.player.Reset();
+                this.floorSpawner.Reset();
+                this.camera.Reset();
+                this.gameEnd = false;
+                this.cub.Play();
+                this.player.Play();
+                this.pointSpawner.Play();
+                this.startScreen = true;
+                this.backgroundMusic.GetComponent<AudioSource>().Play();
+            }
         }
     }
 }

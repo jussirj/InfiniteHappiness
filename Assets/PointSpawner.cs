@@ -19,7 +19,7 @@ public class PointSpawner : MonoBehaviour
     private bool canSpawn = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this.plusPoint = GameObject.Find("PlusPoint");
         this.minusPoint = GameObject.Find("MinusPoint");

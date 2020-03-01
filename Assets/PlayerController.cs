@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float jumpDuration = 0.3f;
 
     // Start is called before the first frame update
-    public void Start()
+    public void Awake()
     {
         this.floorSpawner = GameObject.Find("FloorSpawner").GetComponent<FloorSpawner>();
         this.barkSounds.Add(GameObject.Find("cub_bark_1"));
@@ -118,5 +118,11 @@ public class PlayerController : MonoBehaviour
         transform.position = this.initialPosition;
         this.nextFloorPosition = transform.position + new Vector3(0, -300, 1000);
         this.stopped = false;
+    }
+
+    public void Play()
+    {
+        this.initialPosition = transform.position;
+        this.nextFloorPosition = new Vector3(0, -1000, 1000);
     }
 }
