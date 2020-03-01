@@ -13,7 +13,7 @@ public class Camera : MonoBehaviour
     private Vector3 initialBackgroundPosition;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this.backgroundGradient = GameObject.Find("BackgroundGradient");
         this.player = GameObject.Find("Player");

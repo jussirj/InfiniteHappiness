@@ -27,14 +27,15 @@ public class FloorSpawner : MonoBehaviour
 
     private Vector3 initialPosition;
 
+    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        this.floor = GameObject.Find("Cube");
+        InstantiateFloors();
         this.playerTransform = GameObject.Find("Player").transform;
         this.cameraScript = GameObject.Find("Main Camera").GetComponent<Camera>();
-        this.floor = GameObject.Find("Cube");
         this.initialPosition = transform.position;
-        InstantiateFloors();
     }
 
     // Update is called once per frame
