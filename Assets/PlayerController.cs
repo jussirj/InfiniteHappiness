@@ -36,8 +36,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            this.jumpTime = Time.realtimeSinceStartup + 0.4f;
-            nextFloorPosition = new Vector3(0, -1000, 1500);
+            if (transform.position.y < nextFloorPosition.y - 5f)
+            {
+                this.jumpTime = Time.realtimeSinceStartup + 0.4f;
+                nextFloorPosition = new Vector3(0, -1000, 1500);
+            }
         }
 
         if (!stopped)
@@ -48,7 +51,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5, 0.15f);
+                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5.5f, 0.15f);
             }
         }
 
