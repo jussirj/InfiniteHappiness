@@ -108,10 +108,10 @@ public class FloorSpawner : MonoBehaviour
         if (this.removedFloorMax != 0 && this.removedFloorCount <= this.removedFloorMax)
         {
             this.removedFloorCount++;
+            floor.transform.Find("bone").gameObject.SetActive(false);
 
             if (this.removedFloorCount > 2) { 
                 floor.transform.Find("Cube").gameObject.tag = "Hole";
-                floor.transform.Find("bone").gameObject.SetActive(false);
                 if (this.removedFloorCount == this.removedFloorMax)
                 {
                     this.noGapsForNextFrames = 10;
