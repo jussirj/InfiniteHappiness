@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
             this.floorSpawner.SetRandomEnabled(true);
         }
 
-        if (gameEnd && Input.GetKey(KeyCode.Space))
+        if (gameEnd && Input.GetKey(KeyCode.R))
         {
             this.winScreen.SetActive(false);
             this.loseScreen.SetActive(false);
