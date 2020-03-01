@@ -19,6 +19,7 @@ public class FloorSpawner : MonoBehaviour
     private int floorIndex = 0;
 
     private int removedFloorCount = 0;
+    private int removedFloorMax = 0;
     private int frames = 0;
     private GameObject lastFloor;
     private bool randomEnabled = false;
@@ -89,10 +90,10 @@ public class FloorSpawner : MonoBehaviour
         {
             if(this.happiness > 0)
             {
-                this.removedFloorCount = 5;
+                this.removedFloorMax = 5;
             } else
             {
-                this.removedFloorCount = 8;
+                this.removedFloorMax = 8;
             }
         }
 
@@ -104,15 +105,19 @@ public class FloorSpawner : MonoBehaviour
         this.floorIndex++;
         this.lastFloor = floor;
 
-        if (this.removedFloorCount > 0)
+        if (this.removedFloorMax != 0 && this.removedFloorCount <= this.removedFloorMax)
         {
-            this.removedFloorCount--;
+            this.removedFloorCount++;
 
-            floor.transform.Find("Cube").gameObject.tag = "Hole";
-            floor.transform.Find("bone").gameObject.SetActive(false);
-            if (this.removedFloorCount == 0)
-            {
-                this.noGapsForNextFrames = 10;
+            if (this.removedFloorCount > 2) { 
+                floor.transform.Find("Cube").gameObject.tag = "Hole";
+                floor.transform.Find("bone").gameObject.SetActive(false);
+                if (this.removedFloorCount == this.removedFloorMax)
+                {
+                    this.noGapsForNextFrames = 10;
+                    this.removedFloorCount = 0;
+                    this.removedFloorMax = 0;
+                }
             }
         }
         else {
