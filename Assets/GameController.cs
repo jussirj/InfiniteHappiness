@@ -95,7 +95,6 @@ public class GameController : MonoBehaviour
             this.player.Start();
             this.pointSpawner.Play();
             this.startScreen = true;
-            this.floorSpawner.SetRandomEnabled(false);
             this.backgroundMusic.GetComponent<AudioSource>().Play();
         }
     }
