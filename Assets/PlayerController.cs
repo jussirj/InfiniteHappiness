@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     private List<GameObject> barkSounds = new List<GameObject>();
 
+    private Vector3 nextFloorPosition;
+    
     // Start is called before the first frame update
     public void Start()
     {
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
         this.eatNegativeSound = GameObject.Find("cub_eat_chili");
         this.eatPositiveSound = GameObject.Find("cub_eat_candy");
         this.initialPosition = transform.position;
+        this.nextFloorPosition = new Vector3(0, -1000, 1000);
     }
 
     // Update is called once per frame
@@ -68,22 +71,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (transform.position.y < playerPositionY)
-                {
-                    transform.position = new Vector3(
-                      transform.position.x,
-                      transform.position.y + 0.05f,
-                      transform.position.z + this.zSpeed
-                    );
-                }
-                else
-                {
-                    transform.position = new Vector3(
-                        transform.position.x,
-                        transform.position.y - 0.05f,
-                        transform.position.z + this.zSpeed
-                      );
-                }
+                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5, 0.15f);
             }
         }
 
@@ -94,6 +82,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Floor")
         {
             this.playerPositionY = other.transform.position.y - 5;
+            this.nextFloorPosition = other.transform.position;
         }
         if (other.gameObject.tag == "PlusPoint")
         {
