@@ -100,6 +100,7 @@ public class FloorSpawner : MonoBehaviour
         floor.transform.position = transform.position;
         floor.transform.Find("bone").gameObject.SetActive(true);
         floor.transform.Find("Cube").gameObject.tag = "Floor";
+        floor.transform.Find("Cube").GetComponent<Floor>().SetHappiness(this.happiness);
         this.floorIndex++;
         this.lastFloor = floor;
 

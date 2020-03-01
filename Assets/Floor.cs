@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
+
+    private float happiness;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,15 @@ public class Floor : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public float GetHappiness()
+    {
+        return this.happiness;
+    }
+
+    public void SetHappiness(float happiness)
+    {
+        this.happiness = happiness;
     }
 }

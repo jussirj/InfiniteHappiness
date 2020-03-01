@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 nextFloorPosition;
     private float jumpTime = 0;
+    private float nextFloorHappiness = 0f;
     
     // Start is called before the first frame update
     public void Start()
@@ -47,7 +48,17 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.realtimeSinceStartup < this.jumpTime)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 1000, 1500), 0.15f);
+                if (this.nextFloorHappiness > 0.4)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 1f, 0.8f), 0.2f);
+                }
+                else if (this.nextFloorHappiness < -0.4)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 0f, 1.5f), 0.2f);
+                } else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, 1f, 1.5f), 0.2f);
+                }
             }
             else
             {
@@ -62,10 +73,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Floor")
         {
             this.nextFloorPosition = other.transform.position;
+            this.nextFloorHappiness = other.GetComponent<Floor>().GetHappiness();
         }
         if (other.gameObject.tag == "Hole")
         {
-            this.nextFloorPosition = new Vector3(0, -1000, 1000);
+            this.nextFloorPosition = transform.position + new Vector3(0, -1000, 1000);
         }
         if (other.gameObject.tag == "PlusPoint")
         {
