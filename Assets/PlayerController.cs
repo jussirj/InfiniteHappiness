@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        print(this.nextFloorPosition);
         if (Input.GetKey(KeyCode.Space))
         {
             if (transform.position.y <= playerPositionY)
@@ -84,6 +84,13 @@ public class PlayerController : MonoBehaviour
             this.playerPositionY = other.transform.position.y - 5;
             this.nextFloorPosition = other.transform.position;
         }
+        if (other.gameObject.tag == "Hole")
+        {
+            print("hole");
+            this.nextFloorPosition = new Vector3(0, -1000, 500);
+            // this.nextFloorPosition = other.transform.position;
+
+        }
         if (other.gameObject.tag == "PlusPoint")
         {
             other.gameObject.SetActive(false);
@@ -115,6 +122,7 @@ public class PlayerController : MonoBehaviour
     public void Reset()
     {
         transform.position = this.initialPosition;
+        this.nextFloorPosition = new Vector3(0, -300, 1000);
         this.stopped = false;
     }
 }

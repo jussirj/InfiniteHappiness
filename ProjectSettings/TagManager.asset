@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - PlusPoint
   - MinusPoint
+  - Hole
   layers:
   - Default
   - TransparentFX

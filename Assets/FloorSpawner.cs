@@ -98,14 +98,19 @@ public class FloorSpawner : MonoBehaviour
 
         GameObject floor = this.floors[this.floorIndex];
         floor.transform.position = transform.position;
+        floor.transform.Find("bone").gameObject.SetActive(true);
+        floor.transform.Find("Cube").gameObject.tag = "Floor";
         this.floorIndex++;
         this.lastFloor = floor;
 
         if (this.removedFloorCount > 0)
         {
             this.removedFloorCount--;
-            floor.SetActive(false);
-            if(this.removedFloorCount == 0)
+
+            // floor.tag = "Hole";
+            floor.transform.Find("Cube").gameObject.tag = "Hole";
+            floor.transform.Find("bone").gameObject.SetActive(false);
+            if (this.removedFloorCount == 0)
             {
                 this.noGapsForNextFrames = 10;
             }
