@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float jumpHeight = 4f;
-    private bool jumping = false;
     private FloorSpawner floorSpawner;
-
-    private float playerPositionY = -100f;
-
-    private float zSpeed = 0.1f;
 
     private bool stopped = false;
 
@@ -22,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private List<GameObject> barkSounds = new List<GameObject>();
 
     private Vector3 nextFloorPosition;
+    private float jumpTime = 0;
     
     // Start is called before the first frame update
     public void Start()
@@ -39,35 +34,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(this.nextFloorPosition);
         if (Input.GetKey(KeyCode.Space))
         {
-            if (transform.position.y <= playerPositionY)
-            {
-                jumping = true;
-                this.barkSounds[Mathf.RoundToInt(Random.Range(0, 2))].GetComponent<AudioSource>().Play();
-            }
+            this.jumpTime = Time.realtimeSinceStartup + 0.4f;
+            nextFloorPosition = new Vector3(0, -1000, 1500);
         }
-
-        if (transform.position.y > playerPositionY + jumpHeight)
-        {
-            jumping = false;
-        }
-
-
 
         if (!stopped)
         {
-            if (jumping)
+            if (Time.realtimeSinceStartup < this.jumpTime)
             {
-                if (transform.position.y < playerPositionY + jumpHeight)
-                {
-                    transform.position = new Vector3(
-                      transform.position.x,
-                      transform.position.y + 0.1f,
-                      transform.position.z + this.zSpeed
-                    );
-                }
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 1000, 1500), 0.15f);
             }
             else
             {
@@ -81,14 +58,11 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Floor")
         {
-            this.playerPositionY = other.transform.position.y - 5;
             this.nextFloorPosition = other.transform.position;
         }
         if (other.gameObject.tag == "Hole")
         {
-            print("hole");
-            this.nextFloorPosition = new Vector3(0, -1000, 500);
-            // this.nextFloorPosition = other.transform.position;
+            this.nextFloorPosition = new Vector3(0, -1000, 1000);
 
         }
         if (other.gameObject.tag == "PlusPoint")
@@ -104,14 +78,6 @@ public class PlayerController : MonoBehaviour
             this.eatNegativeSound.GetComponent<AudioSource>().Play();
         }
 
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!this.jumping && other.gameObject.tag == "Floor")
-        {
-            this.playerPositionY = -5000f;
-        }
     }
 
     public void Stop()
