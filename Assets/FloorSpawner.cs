@@ -14,7 +14,7 @@ public class FloorSpawner : MonoBehaviour
     private float distanceToPlayer = 20f;
     private float zSpeed = 1f;
 
-    private int floorAmount = 30;
+    private int floorAmount = 60;
     private List<GameObject> floors = new List<GameObject>();
     private int floorIndex = 0;
 
@@ -96,22 +96,43 @@ public class FloorSpawner : MonoBehaviour
             }
         }
 
+        List<GameObject> spawnedFloors = new List<GameObject>();
         GameObject floor = this.floors[this.floorIndex];
         floor.transform.position = transform.position;
         this.floorIndex++;
         this.lastFloor = floor;
+        spawnedFloors.Add(floor);
+
+        if (this.happiness > 0.5f)
+        {
+            if (this.floorIndex > this.floors.Count - 1)
+            {
+                this.floorIndex = 0;
+            }
+            GameObject secondFloor = this.floors[this.floorIndex];
+            floor.transform.position = transform.position + Vector3.down * 0.2f;
+            this.floorIndex++;
+            spawnedFloors.Add(secondFloor);
+        }
 
         if (this.removedFloorCount > 0)
         {
             this.removedFloorCount--;
-            floor.SetActive(false);
+            for (int i = 0; i < spawnedFloors.Count; ++i)
+            {
+                spawnedFloors[i].SetActive(false);
+            }
             if(this.removedFloorCount == 0)
             {
                 this.noGapsForNextFrames = 10;
             }
         }
         else {
-            floor.SetActive(true);
+            for (int i = 0; i < spawnedFloors.Count; ++i)
+            {
+                spawnedFloors[i].SetActive(true);
+            }
+            print("MOI " + spawnedFloors.Count);
         }
     }
 
