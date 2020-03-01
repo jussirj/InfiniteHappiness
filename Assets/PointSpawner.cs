@@ -93,13 +93,11 @@ public class PointSpawner : MonoBehaviour
             GameObject plusPoint = GameObject.Instantiate(this.plusPoint);
             plusPoint.SetActive(false);
             plusPoints.Add(plusPoint);
-            plusPoints.Add(this.plusPoint);
             this.plusPoint.SetActive(false);
 
             GameObject minusPoint = GameObject.Instantiate(this.minusPoint);
             minusPoint.SetActive(false);
             minusPoints.Add(minusPoint);
-            minusPoints.Add(this.minusPoint);
             this.minusPoint.SetActive(false);
         }
     }
@@ -107,6 +105,8 @@ public class PointSpawner : MonoBehaviour
     public void Reset()
     {
         this.canSpawn = false;
+        this.plusPointIndex = 0;
+        this.minusPointIndex = 0;
         transform.position = this.initialPosition;
     }
 
