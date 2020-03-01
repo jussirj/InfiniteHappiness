@@ -20,9 +20,9 @@ public class PlayerController : MonoBehaviour
     private float nextFloorHappiness = 0f;
     
     private float veloY;
-    private float initialVeloY = 0.5f;
-    private float accY = -0.02f;
-    private float zSpeed = 0.2f;
+    private float initialVeloY = 40f;
+    private float accY = -2.0f;
+    private float zSpeed = 20.0f;
     private float jumpDuration = 0.3f;
 
     // Start is called before the first frame update
@@ -56,11 +56,11 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.realtimeSinceStartup < this.jumpTime)
             {
-                veloY += accY + Mathf.Clamp(this.nextFloorHappiness,0,1)/120;
+                veloY = veloY + accY + Mathf.Clamp(this.nextFloorHappiness,0,1);
                     transform.position = new Vector3(
                         transform.position.x,
-                        transform.position.y + veloY,
-                        transform.position.z + this.zSpeed
+                        transform.position.y + veloY * Time.deltaTime,
+                        transform.position.z + this.zSpeed * Time.deltaTime
                     );
                 if (this.nextFloorHappiness > 0.4)
                 {
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5.5f, this.zSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, nextFloorPosition + Vector3.down * 5.5f, this.zSpeed * Time.deltaTime);
             }
         }
 
