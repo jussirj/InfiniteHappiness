@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
             if (transform.position.y < nextFloorPosition.y - 5f)
             {
                 this.jumpTime = Time.realtimeSinceStartup + 0.4f;
-                nextFloorPosition = new Vector3(0, -1000, 1500);
+                nextFloorPosition = transform.position + new Vector3(0, -1000, 1500);
             }
         }
 
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
     public void Reset()
     {
         transform.position = this.initialPosition;
-        this.nextFloorPosition = new Vector3(0, -300, 1000);
+        this.nextFloorPosition = transform.position + new Vector3(0, -300, 1000);
         this.stopped = false;
     }
 }
